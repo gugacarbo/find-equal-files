@@ -1,6 +1,6 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {Select} from '@inkjs/ui';
-import {Box, Text, useInput} from 'ink';
+import {Box, Text} from 'ink';
 import {FileFinderResponse} from '../@types/file-finder.js';
 import {DuplicatedFilesList} from './duplicated-list.js';
 import * as path from 'path';
@@ -10,37 +10,29 @@ type HashesListProps = {
 	showPaths: boolean;
 	setError: (error: {message: string; name: string} | null) => void;
 	response: FileFinderResponse | null | undefined;
+	searching: boolean;
 };
 
 export const HashesList: React.FC<HashesListProps> = ({
 	showPaths,
 	response,
 	setError,
+	searching,
 }) => {
 	const [selected, setSelected] = useState<string | null>(null);
 
-	useInput((input, key) => {
-		if ((selected && input === 'b') || key.backspace) {
-			setSelected(null);
-		}
-	});
+	const duplicated = Object.entries(response?.hashes || {})
+		.filter(([_, paths]) => paths.length > 1)
+		.map(([hash, paths]) => ({
+			label: showPaths
+				? ` ${paths[0]} - (${chalk.yellow(paths.length)})`
+				: `${hash.slice(0, 4)}...${path.basename(
+						paths?.[0] ?? '',
+				  )} - (${chalk.yellow(paths.length)})`,
+			value: hash,
+		}));
 
-	const duplicated = useMemo(
-		() =>
-			Object.entries(response?.hashes || {})
-				.filter(([_, paths]) => paths.length > 1)
-				.map(([hash, paths]) => ({
-					label: showPaths
-						? ` ${paths[0]} - (${chalk.yellow(paths.length)})`
-						: `${hash.slice(0, 4)}...${path.basename(
-								paths?.[0] ?? '',
-						  )} - (${chalk.yellow(paths.length)})`,
-					value: hash,
-				})),
-		[response, showPaths],
-	);
-
-	return (
+	return searching ? null : (
 		<Box flexDirection="column" gap={1}>
 			{selected && (
 				<Text>

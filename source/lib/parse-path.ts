@@ -1,4 +1,4 @@
-export function parsePath(path = '', max = 2, last = 2): string {
+export function parsePath(path = '', max = 1, last = 2): string {
 	const parts = path.replace(/\\\\/g, '/').replace(/\\/g, '/').split('/');
 
 	if (parts.length <= max + last) {

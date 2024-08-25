@@ -2,41 +2,37 @@ import React from 'react';
 
 import {Box, Text} from 'ink';
 import Spinner from 'ink-spinner';
-
-export type Log = {
-	fileCount: number;
-	duplicatesCount: number;
-};
+import {FileFinderResponse} from '../@types/file-finder.js';
 
 type LogInfoProps = {
-	log: Log;
+	response?: FileFinderResponse | null;
 	searching: boolean;
 };
 
-
-export const LogInfo: React.FC<LogInfoProps> = ({log, searching}) => (
-	<Box marginBottom={1}>
-		{searching && (
-			<Box marginRight={1}>
-				<Spinner type="dots" />
-			</Box>
-		)}
-		<Text>
-			Read{' '}
-			<Text
-				bold={log.fileCount > 0}
-				color={log.fileCount > 0 ? 'yellow' : 'green'}
-			>
-				{log.fileCount}
-			</Text>{' '}
-			file{log.fileCount !== 1 && 's'}, found{' '}
-			<Text
-				bold={log.duplicatesCount > 0}
-				color={log.duplicatesCount > 0 ? 'red' : 'green'}
-			>
-				{log.duplicatesCount}
-			</Text>{' '}
-			duplicates
-		</Text>
-	</Box>
-);
+export const LogInfo: React.FC<LogInfoProps> = ({response, searching}) =>
+	!response ? null : (
+		<Box marginBottom={1}>
+			{searching && (
+				<Box marginRight={1}>
+					<Spinner type="dots" />
+				</Box>
+			)}
+			<Text>
+				Read{' '}
+				<Text
+					bold={response.total > 0}
+					color={response.total > 0 ? 'yellow' : 'green'}
+				>
+					{response.total}
+				</Text>{' '}
+				file{response.total !== 1 && 's'}, found{' '}
+				<Text
+					bold={response.duplicates > 0}
+					color={response.duplicates > 0 ? 'red' : 'green'}
+				>
+					{response.duplicates}
+				</Text>{' '}
+				duplicates
+			</Text>
+		</Box>
+	);

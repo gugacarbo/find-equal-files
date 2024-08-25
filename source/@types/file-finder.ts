@@ -1,10 +1,3 @@
-type ProgressCallback = ({
-	fileCount,
-}: {
-	fileCount: number;
-	duplicatesCount: number;
-}) => void;
-
 type FileFinderMode = 'deep' | 'shallow' | 'by-name';
 
 export interface FileFinderResponse {
@@ -12,6 +5,8 @@ export interface FileFinderResponse {
 	total: number;
 	hashes: {[hash: string]: string[]};
 }
+
+type ProgressCallback = (response: FileFinderResponse) => void;
 
 export interface FileFinderProps {
 	dir: string;

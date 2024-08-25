@@ -5,9 +5,10 @@ import {findDuplicateFiles} from './file-finder/index.js';
 import {FileFinderResponse} from './@types/file-finder.js';
 import {Header} from './components/header.js';
 import {Error} from './components/error.js';
-import {Log, LogInfo} from './components/result-log.js';
+import {LogInfo} from './components/result-log.js';
 import {parsePath} from './lib/parse-path.js';
 import {HashesList} from './components/hashes-list.js';
+import {absolutePath} from './lib/absolute-path.js';
 
 type Props = {
 	path?: string;
@@ -21,7 +22,6 @@ const App: React.FC<Props> = ({path = process.cwd()}) => {
 
 	const [exiting, setExiting] = useState(false);
 
-	const [log, setLog] = useState<Log>({fileCount: 0, duplicatesCount: 0});
 	const [response, setResponse] = useState<FileFinderResponse | null>();
 
 	const [error, setError] = useState<{
@@ -58,19 +58,15 @@ const App: React.FC<Props> = ({path = process.cwd()}) => {
 	useEffect(() => {
 		findDuplicateFiles({
 			dir: path,
-			onProgress: fileCount => setLog(fileCount),
+			onProgress: fileCount => setResponse(fileCount),
 			onEnd: response => {
 				setResponse(response);
-				setLog({
-					fileCount: response.total,
-					duplicatesCount: response.duplicates,
-				});
 				setSearching(false);
 			},
 		}).catch(err => setError(err));
 	}, [path]);
 
-	const reducedPath = parsePath(path);
+	const reducedPath = parsePath(absolutePath(path));
 
 	return (
 		<Box width="100%" flexDirection="column">
@@ -83,14 +79,13 @@ const App: React.FC<Props> = ({path = process.cwd()}) => {
 				error={error?.message}
 			/>
 			<Error message={error?.message} />
-			<LogInfo log={log} searching={searching} />
-			{!searching && (
-				<HashesList
-					setError={err => setError(err)}
-					showPaths={showPaths}
-					response={response}
-				/>
-			)}
+			<LogInfo response={response} searching={searching} />
+			<HashesList
+				setError={err => setError(err)}
+				showPaths={showPaths}
+				response={response}
+				searching={searching}
+			/>
 		</Box>
 	);
 };

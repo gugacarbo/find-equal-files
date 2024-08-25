@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import {FileFinderProps, FileFinderResponse} from '../@types/file-finder.js';
+import {absolutePath} from '../lib/absolute-path.js';
 
 function getFileHash(filePath: string): Promise<string> {
 	return new Promise((resolve, reject) => {
@@ -19,7 +20,6 @@ export async function findDuplicateFiles({
 	onProgress,
 	onEnd,
 }: FileFinderProps): Promise<FileFinderResponse> {
-
 	const fileHashes: {[hash: string]: string[]} = {};
 	const duplicates: string[] = [];
 	let fileCount = 0;
@@ -35,7 +35,7 @@ export async function findDuplicateFiles({
 				await traverseDirectory(fullPath);
 			} else if (stat.isFile()) {
 				fileCount++;
-				onProgress({fileCount, duplicatesCount: duplicates.length});
+				onProgress({duplicates: duplicates.length, total: fileCount, hashes: fileHashes});
 				const hash = await getFileHash(fullPath);
 
 				if (fileHashes[hash]) {
@@ -50,14 +50,9 @@ export async function findDuplicateFiles({
 				}
 			}
 		}
-		onProgress({fileCount, duplicatesCount: duplicates.length});
+		onProgress({duplicates: duplicates.length, total: fileCount, hashes: fileHashes});
 	}
-
-	const dirPath = path.dirname(
-		dir.startsWith('/') || dir.startsWith('\\')
-			? path.join(process.cwd(), dir)
-			: path.join(dir),
-	);
+	const dirPath = absolutePath(dir);
 
 	await traverseDirectory(dirPath);
 
