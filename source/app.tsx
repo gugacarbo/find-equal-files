@@ -67,7 +67,7 @@ const App: React.FC<Props> = ({path = process.cwd()}) => {
 				});
 				setSearching(false);
 			},
-		}).catch(err => console.error(err));
+		}).catch(err => setError(err));
 	}, [path]);
 
 	const reducedPath = parsePath(path);

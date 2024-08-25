@@ -19,6 +19,7 @@ export async function findDuplicateFiles({
 	onProgress,
 	onEnd,
 }: FileFinderProps): Promise<FileFinderResponse> {
+
 	const fileHashes: {[hash: string]: string[]} = {};
 	const duplicates: string[] = [];
 	let fileCount = 0;

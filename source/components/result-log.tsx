@@ -13,6 +13,7 @@ type LogInfoProps = {
 	searching: boolean;
 };
 
+
 export const LogInfo: React.FC<LogInfoProps> = ({log, searching}) => (
 	<Box marginBottom={1}>
 		{searching && (
