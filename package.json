@@ -2,7 +2,7 @@
 	"name": "find-equal-files",
 	"version": "0.0.0",
 	"license": "MIT",
-	"bin": "dist/cli.js",
+	"bin": "dist/source/cli.js",
 	"type": "module",
 	"engines": {
 		"node": ">=16"
@@ -11,7 +11,7 @@
 		"build": "tsc",
 		"dev": "tsx watch source/cli.tsx --path /test/data",
 		"start": "tsc --watch",
-		"go": "node dist/cli.js",
+		"go": "node dist/source/cli.js",
 		"pretify": "prettier --write .",
 		"test": "prettier --check . && ava"
 	},
@@ -51,7 +51,7 @@
 				"ts"
 			],
 			"rewritePaths": {
-				"test/": "dist/test/"
+				"source/": "dist/"
 			},
 			"compile": false
 		}

@@ -1,4 +1,4 @@
-import { Text } from 'ink';
+import {Text} from 'ink';
 import React from 'react';
 
 function TestComponent() {

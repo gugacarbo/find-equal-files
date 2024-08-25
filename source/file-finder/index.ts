@@ -35,7 +35,11 @@ export async function findDuplicateFiles({
 				await traverseDirectory(fullPath);
 			} else if (stat.isFile()) {
 				fileCount++;
-				onProgress({duplicates: duplicates.length, total: fileCount, hashes: fileHashes});
+				onProgress({
+					duplicates: duplicates.length,
+					total: fileCount,
+					hashes: fileHashes,
+				});
 				const hash = await getFileHash(fullPath);
 
 				if (fileHashes[hash]) {
@@ -50,7 +54,11 @@ export async function findDuplicateFiles({
 				}
 			}
 		}
-		onProgress({duplicates: duplicates.length, total: fileCount, hashes: fileHashes});
+		onProgress({
+			duplicates: duplicates.length,
+			total: fileCount,
+			hashes: fileHashes,
+		});
 	}
 	const dirPath = absolutePath(dir);
 

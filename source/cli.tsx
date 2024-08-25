@@ -5,7 +5,6 @@ import meow from 'meow';
 import App from './app.js';
 import chalk from 'chalk';
 
-
 const cli = meow(
 	`${chalk.bold('Usage')}
 

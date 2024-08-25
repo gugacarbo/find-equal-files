@@ -44,7 +44,7 @@ export const DuplicatedFilesList: React.FC<DuplicatedFilesListProps> = ({
 					openDir(item.value, setError).then(() =>
 						setTimeout(() => {
 							setOppening(false);
-						}, 500),
+						}, 1000),
 					);
 				}}
 			/>

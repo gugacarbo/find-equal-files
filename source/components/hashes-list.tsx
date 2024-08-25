@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Select} from '@inkjs/ui';
-import {Box, Text} from 'ink';
+import {Box, Text, useInput} from 'ink';
 import {FileFinderResponse} from '../@types/file-finder.js';
 import {DuplicatedFilesList} from './duplicated-list.js';
 import * as path from 'path';
@@ -20,6 +20,12 @@ export const HashesList: React.FC<HashesListProps> = ({
 	searching,
 }) => {
 	const [selected, setSelected] = useState<string | null>(null);
+
+	useInput((input, key) => {
+		if ((selected && input === 'b') || key.backspace) {
+			setSelected(null);
+		}
+	});
 
 	const duplicated = Object.entries(response?.hashes || {})
 		.filter(([_, paths]) => paths.length > 1)

@@ -2,7 +2,7 @@ import React from 'react';
 import test from 'ava';
 import {render} from 'ink-testing-library';
 import {Box, Text} from 'ink';
-import {TestComponent} from '../../source/components/component.js';
+import {TestComponent} from '../../components/component.js';
 
 test('TSX', t => {
 	const {lastFrame} = render(
