@@ -12,6 +12,7 @@
 		"dev": "tsx watch source/cli.tsx --path /test/data",
 		"start": "tsc --watch",
 		"go": "node dist/cli.js",
+		"pretify": "prettier --write .",
 		"test": "prettier --check . && xo && ava"
 	},
 	"files": [

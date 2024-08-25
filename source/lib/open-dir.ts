@@ -5,7 +5,6 @@ export async function openDir(
 	toPath: string,
 	onError?: (error: Error | null) => void,
 ): Promise<boolean> {
-	
 	const dirPath = path.dirname(
 		toPath.startsWith('/') || toPath.startsWith('\\')
 			? path.join(process.cwd(), toPath)
