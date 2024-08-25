@@ -1,6 +1,9 @@
 {
-	"prettier.trailingComma": "all",
-	"prettier.tabWidth": 2,
-	"prettier.semi": false,
-	"prettier.singleQuote": true
+	"prettier.useTabs": true,
+	"prettier.semi": true,
+	"prettier.singleQuote": true,
+	"prettier.quoteProps": "as-needed",
+	"prettier.bracketSpacing": false,
+	"prettier.arrowParens": "avoid",
+	"prettier.trailingComma": "all"
 }

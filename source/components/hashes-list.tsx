@@ -34,7 +34,7 @@ export const HashesList: React.FC<HashesListProps> = ({
 						? ` ${paths[0]} - (${chalk.yellow(paths.length)})`
 						: `${hash.slice(0, 4)}...${path.basename(
 								paths?.[0] ?? '',
-							)} - (${chalk.yellow(paths.length)})`,
+						  )} - (${chalk.yellow(paths.length)})`,
 					value: hash,
 				})),
 		[response, showPaths],
